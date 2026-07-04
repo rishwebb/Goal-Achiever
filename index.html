@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Financial Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Elements for Premium Glassmorphism -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <div class="app-container">
+        
+        <!-- TOP NAVIGATION -->
+        <nav class="premium-nav glass-panel">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#primary-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <defs>
+                            <linearGradient id="primary-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#0a84ff" />
+                                <stop offset="100%" stop-color="#5e5ce6" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    <span>Income Planner</span>
+                </div>
+                <span class="nav-subtitle">July 2026 &rarr; June 2027</span>
+            </div>
+            <div class="nav-right">
+                <button class="btn-icon theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section glass-panel floating">
+            <div class="hero-content">
+                <h2 class="hero-label">Projected Yearly Income</h2>
+                <div class="hero-value">
+                    <span class="currency">₹</span><span id="heroTotal" class="animated-number">—</span>
+                </div>
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Yearly Goal</span>
+                        <strong id="heroGoal">₹—</strong>
+                    </div>
+                    <div class="meta-divider"></div>
+                    <div class="meta-item">
+                        <span class="meta-label">Goal Achieved</span>
+                        <strong id="heroPct" class="status-neutral">—%</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Generate Button Overlay in Hero -->
+            <button class="btn-generate ripple-effect" id="btnGenerate">
+                <span class="btn-text">Generate Financial Plan</span>
+                <div class="btn-loader"></div>
+            </button>
+        </section>
+
+        <!-- KPI CARDS (6 perfectly balanced cards) -->
+        <section class="kpi-grid">
+            <div class="kpi-card glass-panel">
+                <div class="kpi-header">
+                    <span class="kpi-label">Guaranteed Income</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div class="kpi-value" id="kpiGuaranteed">—</div>
+                <div class="kpi-trend">Base foundation</div>
+            </div>
+            
+            <div class="kpi-card glass-panel">
+                <div class="kpi-header">
+                    <span class="kpi-label">Extra Income</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
+                <div class="kpi-value" id="kpiExtra">—</div>
+                <div class="kpi-trend text-primary">Progressive generation</div>
+            </div>
+            
+            <div class="kpi-card glass-panel">
+                <div class="kpi-header">
+                    <span class="kpi-label">One-Time Projects</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+                <div class="kpi-value" id="kpiOneTime">—</div>
+                <div class="kpi-trend">Lump sums</div>
+            </div>
+            
+            <div class="kpi-card glass-panel highlight-card">
+                <div class="kpi-header">
+                    <span class="kpi-label text-white">Remaining to Goal</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" class="text-white" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div class="kpi-value text-white" id="kpiRemaining">—</div>
+                <div class="kpi-trend text-white-50">Amount missing</div>
+            </div>
+
+            <div class="kpi-card glass-panel">
+                <div class="kpi-header">
+                    <span class="kpi-label">Avg Needed / Month</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+                <div class="kpi-value" id="kpiAvgMonth">—</div>
+                <div class="kpi-trend">From remaining goal</div>
+            </div>
+
+            <div class="kpi-card glass-panel">
+                <div class="kpi-header">
+                    <span class="kpi-label">Avg Needed / Week</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div class="kpi-value" id="kpiAvgWeek">—</div>
+                <div class="kpi-trend">From remaining goal</div>
+            </div>
+        </section>
+
+        <!-- INPUT SECTIONS (Grid) -->
+        <div class="layout-grid-2">
+            <!-- Goals & Baseline -->
+            <section class="setup-section">
+                <div class="glass-panel stretch-h">
+                    <div class="panel-header">
+                        <h3>1. Financial Goals</h3>
+                    </div>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Yearly Goal (₹)</label>
+                            <input type="number" id="inpGoal" value="90000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Trip Budget (₹)</label>
+                            <input type="number" id="inpTrip" value="30000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Phone Budget (₹)</label>
+                            <input type="number" id="inpPhone" value="60000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Emergency Fund (₹)</label>
+                            <input type="number" id="inpEmergency" value="15000" min="0">
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Guaranteed Monthly Income (₹)</label>
+                            <input type="number" id="inpGuaranteed" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Distribution Logic -->
+            <section class="setup-section flex-col">
+                <div class="glass-panel stretch-h mb-gutter">
+                    <div class="panel-header">
+                        <h3>2. Income Progression</h3>
+                    </div>
+                    
+                    <div class="segmented-control">
+                        <label class="segment">
+                            <input type="radio" name="progType" value="equal" checked>
+                            <span class="segment-btn">Equal</span>
+                        </label>
+                        <label class="segment">
+                            <input type="radio" name="progType" value="progressive">
+                            <span class="segment-btn">Progressive</span>
+                        </label>
+                        <label class="segment">
+                            <input type="radio" name="progType" value="manual">
+                            <span class="segment-btn">Manual</span>
+                        </label>
+                    </div>
+
+                    <div class="progression-content">
+                        <!-- Equal Info -->
+                        <div id="progEqual" class="prog-pane active">
+                            <p class="help-text">
+                                The planner will automatically divide the remaining goal equally across all 12 months.
+                            </p>
+                            <div class="auto-calc-box">
+                                <span>Auto Monthly Allocation</span>
+                                <strong id="autoEqualAmount">₹—</strong>
+                            </div>
+                        </div>
+
+                        <!-- Progressive Info -->
+                        <div id="progProgressive" class="prog-pane">
+                            <p class="help-text">
+                                The planner automatically distributes the remaining goal smoothly over 12 months on a rising curve.
+                            </p>
+                            <div class="input-group mt-lg">
+                                <label>Growth Curve Aggressiveness</label>
+                                <select id="inpCurveSpeed">
+                                    <option value="very_slow">Very Slow (Linear-ish)</option>
+                                    <option value="slow">Slow</option>
+                                    <option value="medium" selected>Medium Curve</option>
+                                    <option value="fast">Fast Escalation</option>
+                                    <option value="aggressive">Aggressive Exponential</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Manual Info -->
+                        <div id="progManual" class="prog-pane">
+                            <p class="help-text">
+                                Enter precise monthly targets in the <strong>Monthly Breakdown</strong> cards below.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel stretch-h">
+                    <div class="panel-header flex-between">
+                        <h3>3. One-Time Projects</h3>
+                        <button class="btn-sm btn-ghost" id="btnAddProject">+ Add</button>
+                    </div>
+                    <div class="project-list" id="projectList">
+                        <!-- Projects injected here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="generatedContent" style="display: none; opacity: 0; transition: opacity 0.8s ease;">
+            
+            <div class="section-divider">
+                <span>Analytics & Breakdown</span>
+            </div>
+
+            <!-- SCENARIO & PROGRESS BARS -->
+            <div class="layout-grid-2">
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3>Scenario Analysis</h3>
+                    </div>
+                    <div class="scenario-box">
+                        <div class="scenario-badge" id="scenBadge">Evaluating...</div>
+                        <p class="scenario-desc" id="scenDesc">Please generate a plan.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3>Goals Progress</h3>
+                    </div>
+                    <div class="progress-list">
+                        <div class="progress-wrap">
+                            <div class="progress-labels">
+                                <span>Yearly Goal</span><span id="progTxtGoal">—%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill fill-primary" id="progFillGoal"></div></div>
+                        </div>
+                        <div class="progress-wrap">
+                            <div class="progress-labels">
+                                <span>Trip Budget</span><span id="progTxtTrip">—%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill fill-secondary" id="progFillTrip"></div></div>
+                        </div>
+                        <div class="progress-wrap">
+                            <div class="progress-labels">
+                                <span>Phone Budget</span><span id="progTxtPhone">—%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill fill-secondary" id="progFillPhone"></div></div>
+                        </div>
+                        <div class="progress-wrap">
+                            <div class="progress-labels">
+                                <span>Emergency Fund</span><span id="progTxtEmergency">—%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill fill-secondary" id="progFillEmergency"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS GRID -->
+            <div class="glass-panel mb-gutter mt-gutter">
+                <div class="panel-header">
+                    <h3>Financial Charts</h3>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-wrapper">
+                        <h4>Monthly Income Breakdown</h4>
+                        <canvas id="chartBar" width="500" height="300"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h4>Running Total vs Goal</h4>
+                        <canvas id="chartLine" width="500" height="300"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h4>Income Distribution</h4>
+                        <canvas id="chartPie" width="300" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="glass-panel mb-gutter">
+                <div class="panel-header">
+                    <h3>Executive Summary</h3>
+                </div>
+                <div class="chatgpt-report" id="reportText">
+                    Generating report...
+                </div>
+            </div>
+
+            <!-- MONTHLY CARDS & TABLE -->
+            <div class="panel-header">
+                <h3>Monthly Breakdown</h3>
+            </div>
+            
+            <div class="monthly-cards-grid" id="monthlyCardsGrid">
+                <!-- 12 Cards Injected Here -->
+            </div>
+
+            <div class="glass-panel mt-gutter table-wrapper">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Guaranteed</th>
+                            <th>Extra Income</th>
+                            <th>One-Time</th>
+                            <th>Monthly Total</th>
+                            <th>Running Total</th>
+                            <th>Remaining Goal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EXPORT -->
+            <div class="glass-panel mt-gutter export-panel">
+                <div class="panel-header">
+                    <h3>Export & Actions</h3>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-solid" onclick="window.print()">Print Report (PDF)</button>
+                    <button class="btn-outline" id="btnCsv">Download CSV</button>
+                    <button class="btn-outline" id="btnJson">Download JSON</button>
+                    <button class="btn-ghost" id="btnCopyReport">Copy Summary</button>
+                </div>
+            </div>
+
+        </div> <!-- End generated content -->
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
